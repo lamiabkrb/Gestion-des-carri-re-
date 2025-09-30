@@ -21,4 +21,11 @@ class AuthController extends Controller
         }return redirect()->back()->with('error_msg','Parametre de connexion non reconnu ');
     }
 
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login');
+    }
+
 }

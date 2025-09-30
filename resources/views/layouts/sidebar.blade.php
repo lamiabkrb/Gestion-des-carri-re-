@@ -8,23 +8,26 @@
     <!-- Navigation principale -->
     <ul class="nav flex-column flex-grow-1">
         <li class="nav-item">
-            <a href="#" class="nav-link active"><i class="bi bi-house-door-fill me-2"></i> Tableau de bord</a>
+            <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-bold ' : '' }}"><i class="bi bi-house-door-fill me-2"></i> Tableau de bord</a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link"><i class="bi bi-people-fill me-2"></i> Employés</a>
+            <a href="{{ route('employes.index') }}" class="nav-link {{ request()->routeIs('employes.index') ? 'active fw-bold ' : '' }}"><i class="bi bi-people-fill me-2"></i> Employés</a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link"><i class="bi bi-megaphone-fill me-2"></i> Campagnes</a>
+            <a href="{{ route('compagnes.index') }}" class="nav-link {{ request()->routeIs('compagnes.index') ? 'active fw-bold ' : '' }}"><i class="bi bi-megaphone-fill me-2"></i> Campagnes</a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link"><i class="bi bi-gear-fill me-2"></i> Paramètres</a>
+            <a href="{{ route('parametres.index') }}" class="nav-link {{ request()->routeIs('parametres.index') ? 'active fw-bold ' : '' }}"><i class="bi bi-gear-fill me-2"></i> Paramètres</a>
         </li>
     </ul>
 
     <!-- Déconnexion en bas -->
     <ul class="nav flex-column mt-auto">
         <li class="nav-item">
-            <a href="#" class="nav-link"><i class="bi bi-box-arrow-left me-2"></i> Déconnexion</a>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="nav-link btn btn-link"><i class="bi bi-box-arrow-left me-2"></i> Déconnexion</button>
+            </form>
         </li>
     </ul>
 </div>
