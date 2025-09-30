@@ -1,0 +1,77 @@
+/* Palette */
+:root {
+  --brand-primary: #195ba5;
+  --brand-secondary: #2b538e;
+  --accent: #f5c813;
+  --accent-soft: #f1c83a;
+  --bg-light: #eeefef;
+  --soft-blue: #a0b6d0;
+  --pale: #f0e0a2;
+}
+
+/* Styles Admin */
+body.admin-dashboard {
+  background-color: var(--bg-light);
+  color: #222;
+}
+
+/* Sidebar */
+.admin-sidebar {
+  width: 250px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--brand-primary), var(--brand-secondary));
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding-top: 1rem;
+}
+.admin-sidebar .nav-link {
+  color: rgba(255,255,255,0.9);
+}
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link.active {
+  background: rgba(255,255,255,0.08);
+  color: var(--accent);
+}
+
+/* Content area */
+.admin-content {
+  margin-left: 250px;
+  padding: 1.5rem;
+}
+
+/* Topbar */
+.admin-topbar {
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding: .5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Dashboard cards */
+.dashboard-card .card-header {
+  background: linear-gradient(90deg, var(--accent-soft), var(--accent));
+  color: #111;
+  font-weight: 600;
+}
+
+/* Buttons */
+.btn-brand {
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: #fff;
+}
+.btn-accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #111;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .admin-sidebar { position: relative; width: 100%; min-height: auto; }
+  .admin-content { margin-left: 0; }
+}

@@ -1,0 +1,214 @@
+/* ----------------- Couleurs principales ----------------- */
+.text-primary-custom { color: #262D7B !important; }
+.bg-primary-custom { background-color: #262D7B !important; }
+
+.text-accent { color: #F9CC15 !important; }
+.bg-accent { background-color: #F9CC15 !important; }
+
+.text-success-custom { color: #03681a !important; }
+.bg-success-custom { background-color: #03681a !important; }
+
+.text-error { color: #c70909 !important; }
+.bg-error { background-color: #c70909 !important; }
+
+/* ----------------- Base ----------------- */
+body {
+    background-color: #EFF1F3; /* gardé du style inline */
+    font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+    color: #262D7B;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: #262D7B;
+    border-color: #262D7B;
+}
+.btn-primary:hover {
+    background-color: #1e235f; /* ajouté du style inline */
+    border-color: #1e235f;
+}
+
+.link-custom {
+    color: #262D7B;
+    text-decoration: none;
+}
+.link-custom:hover {
+    color: #F9CC15;
+}
+
+/* Checkbox custom */
+.form-check-input:checked {
+    background-color: #F9CC15;
+    border-color: #F9CC15;
+}
+
+/* ----------------- Sidebar ----------------- */
+.sidebar {
+    background-color: #262D7B;
+    min-height: 100vh;
+    color: #fff;
+    width: 240px; /* ajouté du style inline */
+}
+.sidebar h5 {
+    font-weight: bold;
+    margin-bottom: 20px; /* ajouté du style inline */
+}
+.sidebar .nav-link {
+    color: #d1d5db;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+.sidebar .nav-link.active,
+.sidebar .nav-link:hover {
+    background-color: #f1eee3; /* repris du style inline */
+    color: #262D7B;
+    font-weight: 600; /* ajouté du style inline */
+}
+
+/* ----------------- Cards ----------------- */
+.card {
+    border: none;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.stat-card, .custom-card {
+    padding: 1rem;
+    min-height: 130px; /* pour cohérence des tailles */
+}
+
+/* Icônes rondes dans stats */
+.icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #EFF1F3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #262D7B;
+    margin: 0 auto;
+}
+.stat-card h4 {
+    color: #262D7B;
+}
+
+/* ----------------- Badges ----------------- */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.status-en-cours {
+    background-color: #F9CC15;
+    color: #262D7B; /* harmonisé avec l’inline */
+}
+.status-planifiee {
+    background-color: #e2e6ea; /* version inline */
+    color: #495057;
+}
+.status-cloturee {
+    background-color: #03681a;
+    color: #fff;
+}
+.status-erreur {
+    background-color: #c70909;
+    color: #fff;
+}
+
+/* ----------------- Topbar ----------------- */
+.topbar {
+    height: 60px;
+    border-bottom: 1px solid #eaeaea;
+}
+.topbar h3 {
+    font-size: 1.25rem;
+}
+
+/* ----------------- Timeline (progression campagnes) ----------------- */
+.timeline-container {
+  position: relative;
+  padding: 20px 0;
+}
+.timeline-line {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #d1d5db;
+  z-index: 1;
+}
+.timeline-progress {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  height: 4px;
+  background: #262D7B;
+  z-index: 2;
+  width: 50%; /* à ajuster dynamiquement */
+}
+.timeline-step {
+  position: relative;
+  text-align: center;
+  flex: 1;
+  z-index: 3;
+}
+.timeline-step .circle {
+  width: 20px;
+  height: 20px;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  background: #d1d5db;
+  border: 3px solid #d1d5db;
+}
+.timeline-step.completed .circle {
+  background: #262D7B;
+  border-color: #262D7B;
+}
+.timeline-step.active .circle {
+  background: #F9CC15;
+  border-color: #F9CC15;
+}
+.timeline-step .label {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+
+/****************************** Employes **********************************/
+                /*** pagination ***/
+        .pagination .page-item.active .page-link {
+            background-color: #2d3592;   /* Mets ton code couleur ici */
+            border-color: #2d3592;
+            color: #fff; /* texte blanc */
+        }
+
+        .pagination .page-link {
+            color: #2d3592;  /* Couleur du texte */
+        }
+
+        .pagination .page-link:hover {
+            background-color: #f9f6ead2; /* une teinte plus claire au hover */
+            border-color: #2d3592;
+            color: #2d3592;
+
+        }
+
+        /*** matricule ***/
+        table.table td.matricule,
+        .table td.matricule {
+        font-size: 0.80rem;      /* taille plus petite */
+        font-weight: 700;        /* gras */
+        color: #2d3592;          /* couleur demandée */
+        }
+        table.table small {
+            font-size: 0.75rem;
+            color: #6c757d; /* gris clair bootstrap */
+        }
+            
