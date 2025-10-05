@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('manager.layouts.index')
 
 @section('title', 'Dashboard Admin')
 @section('page-title', 'Tableau de bord')

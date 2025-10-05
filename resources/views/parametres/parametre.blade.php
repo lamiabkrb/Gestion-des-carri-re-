@@ -1,4 +1,4 @@
-@extends('layouts.index')
+@extends('admin.layouts.index')
 
 @section('title', 'Paramètres')
 @section('page-title', 'Paramètres')

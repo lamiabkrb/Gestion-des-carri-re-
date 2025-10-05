@@ -2,14 +2,19 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ManagerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[AuthController::class,'login'])->name('login');
 Route::post('/',[AuthController::class, 'handlelogin'])->name('handlelogin');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard',[AppController::class, 'index'])->name('dashboard');
+Route::middleware(['auth','role:GRH'])->group(function () {
+    Route::get('/admin/dashboard',[AppController::class, 'index'])->name('admin.dashboard');
+});
+
+Route::middleware(['auth', 'role:Manager'])->group(function () {
+    Route::get('/manager/dashboard', [ManagerController::class, 'index'])->name('manager.dashboard');
 });
 
 Route::get('/employes', function () {

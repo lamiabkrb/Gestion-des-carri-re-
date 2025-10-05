@@ -13,12 +13,12 @@
 
 <div class="d-flex">
     {{-- Sidebar --}}
-    @include('layouts.sidebar')
+    @include('admin.layouts.sidebar')
 
     {{-- Main content --}}
     <div class="flex-grow-1">
         {{-- Topbar --}}
-        @include('layouts.topbar')
+        @include('admin.layouts.topbar')
 
         <div class="p-4">
             @yield('content')
