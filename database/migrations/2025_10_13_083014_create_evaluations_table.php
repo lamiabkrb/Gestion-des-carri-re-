@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('evaluations', function (Blueprint $table) {
             $table->id();
+            $table->string('employe_matricule');
+            $table->foreign('employe_matricule')
+                ->references('matricule')
+                ->on('employes')
+                ->onDelete('cascade');
+            $table->foreignId('compagne_id')->constrained('compagnes')->onDelete('cascade');
+            $table->foreignId('manager_id')->constrained('users')->onDelete('cascade');
+            $table->float('note')->default(0);
+            $table->text('commentaire')->nullable();
             $table->timestamps();
         });
     }

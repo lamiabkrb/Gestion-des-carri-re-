@@ -19,11 +19,11 @@ class AuthController extends Controller
         if(Auth::attempt($credentials)){
             // Récupération de l'utilisateur connecté
             $user = Auth::user();
-            if($user->hasRole('GRH')){
+            if($user->hasRole('grh')){
                 return redirect()->route('admin.dashboard');
             }
 
-            if ($user->hasRole('Manager')) {
+            if ($user->hasRole('manager')) {
                 return redirect()->route('manager.dashboard');
             }
            

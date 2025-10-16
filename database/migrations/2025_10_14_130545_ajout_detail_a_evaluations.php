@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('campagnes', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('evaluations', function (Blueprint $table) {
+           $table->json('notes_details')->nullable()->after('note');
         });
     }
 
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('campagnes');
+        Schema::table('evaluations', function (Blueprint $table) {
+             $table->dropColumn('notes_details');
+        });
     }
 };

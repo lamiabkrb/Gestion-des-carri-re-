@@ -16,7 +16,7 @@
     @include('manager.layouts.sidebar')
 
     {{-- Main content --}}
-    <div class="flex-grow-1">
+    <div class="flex-grow-1  main-content">
         {{-- Topbar --}}
         @include('manager.layouts.topbar')
 

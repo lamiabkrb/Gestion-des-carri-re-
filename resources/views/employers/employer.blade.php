@@ -9,10 +9,49 @@
         {{-- Header --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold text-primary-custom">Listes des employés</h4>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCampaignModal">
-                <i class="bi bi-plus-circle me-2"></i>Ajouter un employé
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importEmployesModal">
+                <i class="bi bi-plus-circle me-2"></i>Importer les employés (CSV)
             </button>
+
         </div>
+
+
+        <!-- Modale d'import -->
+        <div class="modal fade" id="importEmployesModal" tabindex="-1" aria-labelledby="importEmployesModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="importEmployesModalLabel">Importer les employés</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    </div>
+
+                    <form action="{{ route('employes.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="file" class="form-label">Sélectionnez un fichier CSV :</label>
+                                <input type="file" name="file" id="file" class="form-control" accept=".csv"
+                                    required>
+                            </div>
+                            <div class="alert alert-info">
+                                Format attendu : <strong>matricule, nom, poste, département, date_recrutement,
+                                    date_dernier_echelon, echelon</strong>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-primary">Importer</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        {{-- End Modale d'import --}}
+
 
         {{-- Barre de recherche et filtres --}}
         <div class="d-flex mb-3">
@@ -38,241 +77,135 @@
             <button class="btn btn-outline-danger"><i class="bi bi-file-earmark-pdf me-1"></i> Exporter PDF</button>
         </div>
 
+        @if (session('success_msg'))
+            <div class="alert alert-success">{{ session('success_msg') }}</div>
+        @endif
+
+        @if (session('error_msg'))
+            <div class="alert alert-danger">{{ session('error_msg') }}</div>
+        @endif
+
+
+
         {{-- Tableau des employés --}}
         <div class="card custom-card p-3">
             <table class="table align-middle">
                 <thead>
                     <tr>
                         <th>Matricule</th>
-                        <th>Nom & Prénom</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
                         <th>Poste</th>
                         <th>Département</th>
-                        <th>Catégorie</th>
+                        <th>Date recrutement</th>
                         <th>Échelon</th>
-                        <th>Date d’entrée</th>
-                        <th>Statut</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="matricule">123456789</td>
-                        <td>Ali Ben Ahmed</td>
-                        <td>Développeur</td>
-                        <td>IT</td>
-                        <td>
-                            12
-                            <br><small class="text-muted">Dernière : 15/06/2023</small>
-                        </td>
-                        <td>
-                            5
-                            <br><small class="text-muted">Dernier : 01/07/2022</small>
-                        </td>
-                        <td>01/03/2022</td>
-                        <td><span class="status-badge status-en-cours">Actif</span></td>
 
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                                data-bs-target="#ficheEmploye1">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-success"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="matricule">987654321</td>
-                        <td>Fatima Zahra</td>
-                        <td>Responsable RH</td>
-                        <td>Ressources Humaines</td>
-                        <td>
-                            10
-                            <br><small class="text-muted">Dernière : 01/01/2022</small>
-                        </td>
-                        <td>
-                            4
-                            <br><small class="text-muted">Dernier : 15/02/2021</small>
-                        </td>
-                        <td>15/09/2020</td>
-                        <td><span class="status-badge status-cloturee">Suspendu</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
-                                data-bs-target="#ficheEmploye2">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-success"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                        </td>
-                    </tr>
+                    @foreach ($employes as $employe)
+                        <tr>
+                            <td class="matricule">{{ $employe->matricule }}</td>
+                            <td>{{ $employe->nom }}</td>
+                            <td>{{ $employe->prenom }}</td>
+                            <td>{{ $employe->poste }}</td>
+                            <td>{{ $employe->departement }}</td>
+                            <td>{{ $employe->date_recrutement }}</td>
+                            <td>
+                                {{ $employe->echelon }}
+                                <br><small class="text-muted">Dernière : {{ $employe->date_dernier_echelon }}</small>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                    data-bs-target="#ficheEmploye{{ $employe->matricule }}">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
 
             </table>
 
-            {{-- Modals - Fiches Employés --}}
-            <!-- Modal Fiche Employé Ali Ben Ahmed -->
-            <div class="modal fade" id="ficheEmploye1" tabindex="-1" aria-labelledby="ficheEmployeLabel1"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
+            {{-- --------------------------- Modals - Fiches Employés --------------------------- --}}
+            @foreach ($employes as $employe)
+                <div class="modal fade" id="ficheEmploye{{ $employe->matricule }}" tabindex="-1"
+                    aria-labelledby="ficheEmploye{{ $employe->matricule }}" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
 
-                        <!-- En-tête -->
-                        <div class="modal-header">
-                            <h5 class="modal-title fw-bold" id="ficheEmployeLabel1" style="color:#2d3592;">
-                                Fiche Employé – Ali Ben Ahmed
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                            <!-- En-tête -->
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold" id="ficheEmploye{{ $employe->matricule }}"
+                                    style="color:#2d3592;">
+                                    Fiche Employé – {{ $employe->nom }} {{ $employe->prenom }}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fermer"></button>
+                            </div>
+
+                            <!-- Corps -->
+                            <div class="modal-body">
+
+                                <!-- Infos administratives -->
+                                <h6 class="fw-bold" style="color:#2d3592;">Infos administratives</h6>
+                                <ul class="list-unstyled mb-3">
+                                    <li><strong>Matricule :</strong> {{ $employe->matricule }}</li>
+                                    <li><strong>Nom & Prénom :</strong> {{ $employe->nom }} {{ $employe->prenom }}</li>
+                                    <li><strong>Poste :</strong> {{ $employe->poste }}</li>
+                                    <li><strong>Département :</strong> {{ $employe->departement }}</li>
+                                    <li><strong>Date d’entrée :</strong> {{ $employe->date_recrutement }}</li>
+                                </ul>
+
+                                <!-- Historique des avancements -->
+                                <h6 class="fw-bold" style="color:#2d3592;">Historique des avancements</h6>
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Département</th>
+                                            <th>Date avancement</th>
+                                            <th>Échelon</th>
+                                            <th>Remarques</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ $employe->departement }}</td>
+                                            <td>{{ $employe->date_dernier_echelon }}</td>
+                                            <td>{{ $employe->echelon }}</td>
+                                            <td>--</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <!-- Pied -->
+                            <div class="modal-footer d-flex justify-content-between align-items-center">
+                                <!-- Lien texte pour téléchargement -->
+                                <a href="#" class="text-decoration-none fw-bold" style="color:#262D7B;" download>
+                                    <i class="bi bi-file-earmark-pdf me-1"></i> Télécharger la fiche employé (PDF)
+                                </a>
+
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            </div>
+
                         </div>
-
-                        <!-- Corps -->
-                        <div class="modal-body">
-
-                            <!-- Infos administratives -->
-                            <h6 class="fw-bold" style="color:#2d3592;">Infos administratives</h6>
-                            <ul class="list-unstyled mb-3">
-                                <li><strong>Matricule :</strong> 123456789</li>
-                                <li><strong>Nom & Prénom :</strong> Ali Ben Ahmed</li>
-                                <li><strong>Poste :</strong> Développeur</li>
-                                <li><strong>Département :</strong> IT</li>
-                                <li><strong>Date d’entrée :</strong> 01/03/2022</li>
-                                <li><strong>Statut :</strong> <span class="badge bg-success">Actif</span></li>
-                            </ul>
-
-                            <!-- Historique des avancements -->
-                            <h6 class="fw-bold" style="color:#2d3592;">Historique des avancements</h6>
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Catégorie</th>
-                                        <th>Date avancement</th>
-                                        <th>Échelon</th>
-                                        <th>Date échelon</th>
-                                        <th>Remarques</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>15/09/2020</td>
-                                        <td>3</td>
-                                        <td>15/02/2021</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td>13</td>
-                                        <td>01/04/2022</td>
-                                        <td>4</td>
-                                        <td>20/05/2023</td>
-                                        <td>Bonne performance</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-
-                        <!-- Pied -->
-                        <div class="modal-footer d-flex justify-content-between align-items-center">
-                            <!-- Lien texte pour téléchargement -->
-                            <a href="#" class="text-decoration-none fw-bold" style="color:#262D7B;" download>
-                                <i class="bi bi-file-earmark-pdf me-1"></i> Télécharger la fiche employé (PDF)
-                            </a>
-
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                        </div>
-
                     </div>
                 </div>
-            </div>
-            <!-- End Modal Ali Ben Ahmed -->
+            @endforeach
+            <!----------------------------- End Modal  ----------------------------->
 
-            <!-- Modal Fiche Employé -->
-            <div class="modal fade" id="ficheEmploye2" tabindex="-1" aria-labelledby="ficheEmployeLabel2"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
 
-                        <!-- En-tête -->
-                        <div class="modal-header">
-                            <h5 class="modal-title fw-bold" id="ficheEmployeLabel2" style="color:#2d3592;">Fiche
-                                Employé – Fatima Zahra
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-                        </div>
-
-                        <!-- Corps -->
-                        <div class="modal-body">
-
-                            <!-- Infos administratives -->
-                            <h6 class="fw-bold" style="color:#2d3592;">Infos administratives</h6>
-                            <ul class="list-unstyled mb-3">
-                                <li><strong>Matricule :</strong> 123456789</li>
-                                <li><strong>Nom & Prénom :</strong> Fatima Zahra</li>
-                                <li><strong>Poste :</strong> Responsable RH</li>
-                                <li><strong>Département :</strong> RH</li>
-                                <li><strong>Date d’entrée :</strong> 15/09/2020</li>
-                                <li><strong>Statut :</strong> <span class="badge bg-success">Actif</span></li>
-                            </ul>
-
-                            <!-- Historique des avancements -->
-                            <h6 class="fw-bold" style="color:#2d3592;">Historique des avancements</h6>
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Catégorie</th>
-                                        <th>Date avancement</th>
-                                        <th>Échelon</th>
-                                        <th>Date échelon</th>
-                                        <th>Remarques</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>12</td>
-                                        <td>15/09/2020</td>
-                                        <td>3</td>
-                                        <td>15/02/2021</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td>13</td>
-                                        <td>01/04/2022</td>
-                                        <td>4</td>
-                                        <td>20/05/2023</td>
-                                        <td>Bonne performance</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-
-                        <!-- Pied -->
-
-                        <div class="modal-footer d-flex justify-content-between align-items-center">
-
-                            <!-- Lien texte pour téléchargement -->
-                            <a href="#" class="text-decoration-none fw-bold" style="color:#262D7B;" download>
-                                <i class="bi bi-file-earmark-pdf me-1"></i> Télécharger la fiche employé (PDF)
-                            </a>
-
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            {{-- End Modals --}}
-
-            {{-- Pagination --}}
-            <nav>
-                <ul class="pagination justify-content-end">
-                    <li class="page-item disabled"><a class="page-link" href="#">Précédent</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Suivant</a></li>
-                </ul>
-            </nav>
+            
+            
 
         </div>
+         {{-- Pagination automatique de Laravel --}}
+            <div class="d-flex justify-content-end mt-3">
+                {{ $employes->links() }}
+            </div>
 
     </div>
 @endsection

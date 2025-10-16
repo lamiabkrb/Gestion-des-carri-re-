@@ -12,7 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employes', function (Blueprint $table) {
-            $table->id();
+            $table->string('matricule')->primary(); // clé primaire personnalisée
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('poste');
+            $table->string('departement');
+            $table->date('date_recrutement');
+            $table->date('date_dernier_echelon')->nullable();
+            $table->integer('echelon')->default(1);
+            $table->integer('cpt')->default(0);
             $table->timestamps();
         });
     }

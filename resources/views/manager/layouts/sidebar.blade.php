@@ -8,13 +8,10 @@
     <!-- Navigation principale -->
     <ul class="nav flex-column flex-grow-1">
         <li class="nav-item">
-            <a href="{{ route('manager.dashboard') }}" class="nav-link {{ request()->routeIs('manager.dashboard') ? 'active fw-bold ' : '' }}"><i class="bi bi-house-door-fill me-2"></i> Tableau de bord Manager</a>
+            <a href="{{ route('manager.dashboard') }}" class="nav-link {{ request()->routeIs('manager.dashboard') ? 'active fw-bold ' : '' }}"><i class="bi bi-house-door-fill me-2"></i> Tableau de bord</a>
         </li>
         <li class="nav-item">
-            <a href="{{ route('employes.index') }}" class="nav-link {{ request()->routeIs('employes.index') ? 'active fw-bold ' : '' }}"><i class="bi bi-people-fill me-2"></i> Employés</a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ route('compagnes.index') }}" class="nav-link {{ request()->routeIs('compagnes.index') ? 'active fw-bold ' : '' }}"><i class="bi bi-megaphone-fill me-2"></i> Campagnes</a>
+            <a href="{{ route('manager.showCompagne') }}" class="nav-link {{ request()->routeIs('compagnes.index') ? 'active fw-bold ' : '' }}"><i class="bi bi-megaphone-fill me-2"></i>Mes Campagnes</a>
         </li>
         <li class="nav-item">
             <a href="{{ route('parametres.index') }}" class="nav-link {{ request()->routeIs('parametres.index') ? 'active fw-bold ' : '' }}"><i class="bi bi-gear-fill me-2"></i> Paramètres</a>

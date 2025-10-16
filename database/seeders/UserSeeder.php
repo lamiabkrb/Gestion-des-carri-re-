@@ -22,18 +22,29 @@ class UserSeeder extends Seeder
             [ // verificaton si le user existe 
                 'name'=>'admin RH ',
                 'password'=>Hash::make('azerty'),
+                'departement'=>'drh',
             ]
         );
         $grh->assignRole($rolegrh);
 
-        $manager = User::firstOrCreate(
-            ['email'=>'manager@gmail.com'],
+        $manager1 = User::firstOrCreate(
+            ['email'=>'manager1@gmail.com'],
             [
-                'name'=>'Manager',
+                'name'=>'Manager1',
                 'password'=>Hash::make('azerty'),
+                'departement'=>'disr',
             ]
         );
-        $manager->assignRole($roleManager);
+        $manager1->assignRole($roleManager);
         
+        $manager2 = User::firstOrCreate(
+            ['email'=>'manager2@gmail.com'],
+            [
+                'name'=>'Manager2',
+                'password'=>Hash::make('azerty'),
+                'departement'=>'dfc',
+            ]
+        );
+        $manager2->assignRole($roleManager);
     }
 }
